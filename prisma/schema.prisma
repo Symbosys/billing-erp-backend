@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Login {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(STAFF)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  STAFF
+  ADMIN
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bills     Bill[]
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String
+  price     Float
+  stock     Int
+  category  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  billItems BillItem[]
+}
+
+model Bill {
+  id            String        @id @default(cuid())
+  customerId    String
+  customer      Customer      @relation(fields: [customerId], references: [id])
+  items         BillItem[]
+  totalAmount   Float
+  paymentMethod PaymentMethod
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}  
+
+model BillItem {
+  id        String  @id @default(cuid())
+  billId    String
+  bill      Bill    @relation(fields: [billId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  UPI
+  OTHER
+}
