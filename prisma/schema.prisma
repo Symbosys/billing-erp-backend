@@ -9,21 +9,16 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 model Login {
   id        String   @id @default(cuid())
   email     String   @unique
   password  String
-  role      Role     @default(STAFF)
+  role      String     @default("STAFF")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-enum Role {
-  STAFF
-  ADMIN
 }
 
 model Customer {
@@ -37,13 +32,14 @@ model Customer {
 }
 
 model Product {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   name      String
+  brand     String?
   price     Float
   stock     Int
   category  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   billItems BillItem[]
 }
 
@@ -53,10 +49,10 @@ model Bill {
   customer      Customer      @relation(fields: [customerId], references: [id])
   items         BillItem[]
   totalAmount   Float
-  paymentMethod PaymentMethod
+  paymentMethod String
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
-}  
+}
 
 model BillItem {
   id        String  @id @default(cuid())
@@ -66,11 +62,4 @@ model BillItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float
-}
-
-enum PaymentMethod {
-  CASH
-  CARD
-  UPI
-  OTHER
 }

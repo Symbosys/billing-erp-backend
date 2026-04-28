@@ -10,6 +10,12 @@ export const createProductSchema = z.object({
     .max(100, "Product name must not exceed 100 characters")
     .trim(),
   
+  brand: z
+    .string()
+    .max(50, "Brand name must not exceed 50 characters")
+    .trim()
+    .optional(),
+  
   price: z.coerce
     .number({ message: "Price is required" })
     .positive("Price must be a positive number"),
@@ -34,6 +40,12 @@ export const updateProductSchema = z.object({
     .string()
     .min(2, "Product name must be at least 2 characters")
     .max(100, "Product name must not exceed 100 characters")
+    .trim()
+    .optional(),
+  
+  brand: z
+    .string()
+    .max(50, "Brand name must not exceed 50 characters")
     .trim()
     .optional(),
   

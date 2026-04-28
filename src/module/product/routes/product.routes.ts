@@ -15,8 +15,8 @@ const router = Router();
 // ─────────────────────────────────────────────
 router.get("/", protect, getAllProducts);
 router.get("/:id", protect, getProductById);
-router.post("/", protect, authorize("ADMIN"), createProduct);
-router.patch("/:id", protect, authorize("ADMIN"), updateProduct);
+router.post("/", protect, createProduct);
+router.patch("/:id", protect, updateProduct);
 router.delete("/:id", protect, authorize("ADMIN"), deleteProduct);
 
 export default router;
