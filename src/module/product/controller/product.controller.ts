@@ -28,7 +28,7 @@ export const createProduct = asyncHandler(
     }
 
     const product = await prisma.product.create({
-      data: parsed.data,
+      data: parsed.data as any,
     });
 
     return SuccessResponse(

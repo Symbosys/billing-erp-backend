@@ -11,6 +11,10 @@ import billItemRoutes from "./module/billItem/routes/billItem.routes.js"
 import dashboardRoutes from "./module/dashboard/routes/dashboard.routes.js"
 import inventoryRoutes from "./module/inventory/routes/inventory.routes.js"
 import analyticsRoutes from "./module/analytics/routes/analytics.routes.js"
+import paymentRoutes from "./module/payment/routes/payment.route.js"
+import supplierRoutes from "./module/supplier/routes/supplier.route.js"
+import purchaseRoutes from "./module/purchase/routes/purchase.route.js"
+import stockHistoryRoutes from "./module/stockHistory/routes/stockHistory.route.js"
 import { errorMiddleware } from "./middleware/error.middleware.js"
 
 const app = express()
@@ -26,6 +30,10 @@ app.use("/bill-item", billItemRoutes)
 app.use("/dashboard", dashboardRoutes)
 app.use("/inventory", inventoryRoutes)
 app.use("/analytics", analyticsRoutes)
+app.use("/payment", paymentRoutes)
+app.use("/supplier", supplierRoutes)
+app.use("/purchase", purchaseRoutes)
+app.use("/stock-history", stockHistoryRoutes)
 
 
 app.get("/", (req, res) => {

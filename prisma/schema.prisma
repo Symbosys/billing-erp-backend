@@ -16,7 +16,7 @@ model Login {
   id        String   @id @default(cuid())
   email     String   @unique
   password  String
-  role      String     @default("STAFF")
+  role      String   @default("STAFF")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -44,14 +44,14 @@ model Product {
 }
 
 model Bill {
-  id            String        @id @default(cuid())
+  id            String     @id @default(cuid())
   customerId    String
-  customer      Customer      @relation(fields: [customerId], references: [id])
+  customer      Customer   @relation(fields: [customerId], references: [id])
   items         BillItem[]
   totalAmount   Float
   paymentMethod String
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 }
 
 model BillItem {
@@ -62,4 +62,31 @@ model BillItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  billId    String
+  amount    Float
+  method    String
+  createdAt DateTime @default(now())
+}
+
+model Supplier {
+  id    String @id @default(cuid())
+  name  String
+  phone String
+}
+
+model Purchase {
+  id         String @id @default(cuid())
+  supplierId String
+  total      Float
+}
+
+model StockHistory {
+  id        String @id @default(cuid())
+  productId String
+  change    Int
+  type      String // IN / OUT
 }
