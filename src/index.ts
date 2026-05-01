@@ -15,6 +15,7 @@ import paymentRoutes from "./module/payment/routes/payment.route.js"
 import supplierRoutes from "./module/supplier/routes/supplier.route.js"
 import purchaseRoutes from "./module/purchase/routes/purchase.route.js"
 import stockHistoryRoutes from "./module/stockHistory/routes/stockHistory.route.js"
+import permissionRoutes from "./module/permission/routes/permission.routes.js"
 import { errorMiddleware } from "./middleware/error.middleware.js"
 
 const app = express()
@@ -34,6 +35,7 @@ app.use("/payment", paymentRoutes)
 app.use("/supplier", supplierRoutes)
 app.use("/purchase", purchaseRoutes)
 app.use("/stock-history", stockHistoryRoutes)
+app.use("/permission", permissionRoutes)
 
 
 app.get("/", (req, res) => {
