@@ -51,15 +51,36 @@ model Product {
   billItems BillItem[]
 }
 
+model DiningTable {
+  id        String   @id @default(cuid())
+  tableName String   @unique
+  capacity  Int
+  available Boolean  @default(true)
+  status    String   @default("Active") // Active / Inactive
+  bills     Bill[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Bill {
-  id            String     @id @default(cuid())
-  customerId    String
-  customer      Customer   @relation(fields: [customerId], references: [id])
-  items         BillItem[]
-  totalAmount   Float
-  paymentMethod String
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  id              String      @id @default(cuid())
+  customerId      String?
+  customer        Customer?   @relation(fields: [customerId], references: [id])
+  items           BillItem[]
+  totalAmount     Float
+  paymentMethod   String
+  orderType       String      @default("DINE_IN") // DINE_IN, DELIVERY, PICK_UP
+  tableId         String?
+  table           DiningTable? @relation(fields: [tableId], references: [id])
+  guestsCount     Int         @default(1)
+  billStatus      String      @default("PENDING") // PENDING (unpaid/KOT), PAID (settled), CANCELLED
+  kotStatus       String      @default("PENDING") // PENDING, PREPARING, READY, SERVED, CANCELLED
+  kotNo           String?
+  isBogo          Boolean     @default(false)
+  isComplimentary Boolean     @default(false)
+  waiterName      String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 }
 
 model BillItem {
